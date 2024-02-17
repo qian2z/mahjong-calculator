@@ -44,7 +44,7 @@ const Settings = ({
   };
 
   return (
-    <Flex align="center" justify="end" gap="2">
+    <Flex align="center" justify="center" gap="2">
       <Button onClick={() => location.reload()} color="red">
         <GrPowerReset />
         Reset

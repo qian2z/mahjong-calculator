@@ -51,7 +51,7 @@ const Settings = ({
       </Button>
       <DialogRoot>
         <DialogTrigger>
-          <Button color="green">
+          <Button>
             <IoIosSettings />
             Setting
           </Button>

@@ -52,6 +52,7 @@ const PlayerList = ({
                 ref={p.ref}
                 required
                 size="3"
+                type="text"
               />
             </TextFieldRoot>
           ))}

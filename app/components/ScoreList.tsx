@@ -55,7 +55,13 @@ const ScoreList = ({
         {add &&
           players.map((p) => (
             <TextFieldRoot key={p.name}>
-              <TextFieldInput defaultValue={0} ref={p.ref} required size="3" />
+              <TextFieldInput
+                defaultValue={0}
+                ref={p.ref}
+                required
+                size="3"
+                type="number"
+              />
             </TextFieldRoot>
           ))}
         {!add &&

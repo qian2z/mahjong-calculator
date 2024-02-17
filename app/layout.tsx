@@ -1,5 +1,6 @@
 import { Container, Theme } from "@radix-ui/themes";
 import "@radix-ui/themes/styles.css";
+import { Analytics } from "@vercel/analytics/react";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import NavBar from "./components/NavBar";
@@ -26,6 +27,7 @@ export default function RootLayout({
             <main>{children}</main>
           </Container>
         </Theme>
+        <Analytics />
       </body>
     </html>
   );

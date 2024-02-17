@@ -31,7 +31,7 @@ const PlayerList = ({
   };
 
   return (
-    <Flex direction="column" gap="4" className="w-1/5">
+    <Flex direction="column" gap="4" className="w-2/5">
       <Flex align="baseline" justify="center">
         {edit ? (
           <Button onClick={handleSave}>

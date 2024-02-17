@@ -37,7 +37,7 @@ const ScoreList = ({
   };
 
   return (
-    <Flex direction="column" gap="4" className="w-1/5">
+    <Flex direction="column" gap="4" className="w-2/5">
       <Flex align="baseline" justify="center" gap="3">
         <Heading>R{round}</Heading>
         {add ? (

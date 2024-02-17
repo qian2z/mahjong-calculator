@@ -12,7 +12,7 @@ import {
 } from "@radix-ui/themes";
 import { useState } from "react";
 import { FaCalculator } from "react-icons/fa";
-import { Player } from "../page";
+import { Player, Score } from "../page";
 
 interface FinalPlayer {
   name: string;
@@ -20,9 +20,16 @@ interface FinalPlayer {
   money: number;
 }
 
-const Results = ({ players }: { players: Player[] }) => {
+const Results = ({
+  players,
+  extraScore,
+  pointCost,
+}: {
+  players: Player[];
+  extraScore: Score[];
+  pointCost: number;
+}) => {
   const [results, setResults] = useState<FinalPlayer[]>([]);
-  const extraScore = [60, 30, -30, -60];
 
   const calculateDifferencesAndSum = () => {
     const rr: number[] = [];
@@ -52,11 +59,11 @@ const Results = ({ players }: { players: Player[] }) => {
     final_players = final_players.sort((a, b) => b.final_score - a.final_score);
     final_players.forEach((player, index) => {
       const scoreIndex = index % extraScore.length;
-      player.final_score = player.final_score + extraScore[scoreIndex];
+      player.final_score = player.final_score + extraScore[scoreIndex].score;
     });
 
     final_players.forEach((player) => {
-      player.money = player.final_score * 0.05;
+      player.money = player.final_score * pointCost;
     });
     setResults(final_players);
   };

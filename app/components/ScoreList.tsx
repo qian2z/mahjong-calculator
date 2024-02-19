@@ -30,6 +30,10 @@ const ScoreList = ({
       name: player.name,
       ref: player.ref,
       score: player.score + parseInt(player.ref.current?.value!),
+      round_score: [
+        ...player.round_score,
+        parseInt(player.ref.current?.value!),
+      ],
     }));
     setPlayers(updatedPlayers);
     setRound(round + 1);

@@ -10,6 +10,7 @@ export interface Player {
   name: string;
   ref: RefObject<HTMLInputElement>;
   score: number;
+  round_score: number[];
 }
 
 export interface Score {
@@ -28,26 +29,30 @@ export default function Home() {
   ]);
   const pointRef = useRef<HTMLInputElement>(null);
   const [pointCost, setPointCost] = useState(0.05);
-  const [players, setPlayers] = useState([
+  const [players, setPlayers] = useState<Player[]>([
     {
       name: "Player A",
       ref: useRef<HTMLInputElement>(null),
       score: 0,
+      round_score: [],
     },
     {
       name: "Player B",
       ref: useRef<HTMLInputElement>(null),
       score: 0,
+      round_score: [],
     },
     {
       name: "Player C",
       ref: useRef<HTMLInputElement>(null),
       score: 0,
+      round_score: [],
     },
     {
       name: "Player D",
       ref: useRef<HTMLInputElement>(null),
       score: 0,
+      round_score: [],
     },
   ]);
 

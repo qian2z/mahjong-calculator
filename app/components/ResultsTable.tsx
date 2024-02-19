@@ -40,7 +40,7 @@ const ResultsTable = ({ results, settlement }: Props) => {
                 {settlement
                   ?.filter((s) => s.payer.name === r.name)
                   .map((s) => (
-                    <Flex gap="2" align="center" justify="start">
+                    <Flex gap="2" align="center" justify="start" key={s.amount}>
                       <Text size="3" weight="bold" color="blue">
                         {s.amount}
                       </Text>

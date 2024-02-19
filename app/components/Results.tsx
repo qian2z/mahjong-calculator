@@ -4,10 +4,13 @@ import { Button, Flex } from "@radix-ui/themes";
 import { useState } from "react";
 import { FaCalculator } from "react-icons/fa";
 import { Player, Score } from "../page";
+import CalculationDialog from "./CalculationDialog";
 import ResultsTable from "./ResultsTable";
 
 export interface FinalPlayer {
   name: string;
+  round_score: number[];
+  score_detail: number[];
   final_score: number;
   money: number;
   settlement: number;
@@ -35,7 +38,9 @@ const Results = ({
     const score_results = calculateDifferencesAndSum(players);
     let final_players = score_results.map((s, index) => ({
       name: players[index].name,
-      final_score: s,
+      round_score: players[index].round_score,
+      score_detail: s.score_detail,
+      final_score: s.sum,
       money: 0,
       settlement: 0,
     }));
@@ -56,7 +61,12 @@ const Results = ({
       <Button size="4" onClick={showResults}>
         <FaCalculator /> Results
       </Button>
-      <ResultsTable results={results} settlement={settlement} />
+      {results.length === 0 ? null : (
+        <ResultsTable results={results} settlement={settlement} />
+      )}
+      {results.length === 0 ? null : (
+        <CalculationDialog players={results} extraScore={extraScore} />
+      )}
     </Flex>
   );
 };

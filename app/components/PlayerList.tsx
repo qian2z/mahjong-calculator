@@ -25,6 +25,7 @@ const PlayerList = ({
       name: player.ref.current?.value || player.name,
       ref: player.ref,
       score: player.score,
+      round_score: player.round_score,
     }));
     setPlayers(updatedPlayers);
     setEdit(false);

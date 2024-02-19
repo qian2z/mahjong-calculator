@@ -1,5 +1,7 @@
 import {
+  Badge,
   Button,
+  Card,
   Flex,
   TableBody,
   TableCell,
@@ -12,12 +14,20 @@ import {
 } from "@radix-ui/themes";
 import { useState } from "react";
 import { FaCalculator } from "react-icons/fa";
+import { FaArrowRight } from "react-icons/fa6";
 import { Player, Score } from "../page";
 
-interface FinalPlayer {
+export interface FinalPlayer {
   name: string;
   final_score: number;
   money: number;
+  settlement: number;
+}
+
+interface Settlement {
+  payer: FinalPlayer;
+  payee: FinalPlayer;
+  amount: number;
 }
 
 const Results = ({
@@ -30,6 +40,7 @@ const Results = ({
   pointCost: number;
 }) => {
   const [results, setResults] = useState<FinalPlayer[]>([]);
+  const [settlement, setSettlement] = useState<Settlement[]>([]);
 
   const calculateDifferencesAndSum = () => {
     const rr: number[] = [];
@@ -55,17 +66,47 @@ const Results = ({
       name: players[index].name,
       final_score: s,
       money: 0,
+      settlement: 0,
     }));
     final_players = final_players.sort((a, b) => b.final_score - a.final_score);
     final_players.forEach((player, index) => {
       const scoreIndex = index % extraScore.length;
       player.final_score = player.final_score + extraScore[scoreIndex].score;
     });
-
     final_players.forEach((player) => {
-      player.money = player.final_score * pointCost;
+      player.money = parseFloat((player.final_score * pointCost).toFixed(2));
     });
     setResults(final_players);
+    setSettlement(calculateSettlement(final_players));
+  };
+
+  const calculateSettlement = (players: FinalPlayer[]) => {
+    const sortedPlayers = players.sort((a, b) => a.money - b.money);
+    const settlements: Settlement[] = [];
+    let payerIndex = 0;
+    let payeeIndex = sortedPlayers.length - 1;
+    while (payerIndex < payeeIndex) {
+      const payer = sortedPlayers[payerIndex];
+      const payee = sortedPlayers[payeeIndex];
+
+      const settlementAmount = Math.min(
+        payee.money - payee.settlement,
+        -payer.money + payer.settlement
+      );
+
+      settlements.push({
+        payer,
+        payee,
+        amount: parseFloat(settlementAmount.toFixed(2)),
+      });
+
+      payer.settlement -= settlementAmount;
+      payee.settlement += settlementAmount;
+
+      if (payer.settlement == payer.money) payerIndex++;
+      if (payee.settlement == payee.money) payeeIndex--;
+    }
+    return settlements;
   };
 
   return (
@@ -80,9 +121,11 @@ const Results = ({
               Player
             </TableColumnHeaderCell>
             <TableColumnHeaderCell justify="center">
-              Final Points
+              Points
             </TableColumnHeaderCell>
-            <TableColumnHeaderCell justify="center">RM</TableColumnHeaderCell>
+            <TableColumnHeaderCell justify="center">
+              Settlement
+            </TableColumnHeaderCell>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -90,10 +133,34 @@ const Results = ({
             <TableRow key={r.name} align="center">
               <TableRowHeaderCell justify="center">{r.name}</TableRowHeaderCell>
               <TableCell justify="center">{r.final_score}</TableCell>
-              <TableCell justify="center">
-                <Text size="5" weight="bold" color="red">
-                  {r.money.toFixed(2)}
-                </Text>
+              <TableCell>
+                <Flex direction="column" gap="2">
+                  {settlement
+                    ?.filter((s) => s.payer.name === r.name)
+                    .map((s) => (
+                      <Card variant="classic">
+                        <Flex gap="2" align="center" justify="start">
+                          <FaArrowRight />
+                          <Text size="2" weight="bold">
+                            {s.payee.name}
+                          </Text>
+                          <Text size="4" weight="bold" color="blue">
+                            {s.amount}
+                          </Text>
+                        </Flex>
+                      </Card>
+                    ))}
+                  <Flex gap="2">
+                    <Badge>Total</Badge>
+                    <Text
+                      size="3"
+                      weight="bold"
+                      color={r.money < 0 ? "red" : "green"}
+                    >
+                      {r.money}
+                    </Text>
+                  </Flex>
+                </Flex>
               </TableCell>
             </TableRow>
           ))}

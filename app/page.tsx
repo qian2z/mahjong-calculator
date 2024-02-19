@@ -29,10 +29,26 @@ export default function Home() {
   const pointRef = useRef<HTMLInputElement>(null);
   const [pointCost, setPointCost] = useState(0.05);
   const [players, setPlayers] = useState([
-    { name: "Player A", ref: useRef<HTMLInputElement>(null), score: 0 },
-    { name: "Player B", ref: useRef<HTMLInputElement>(null), score: 0 },
-    { name: "Player C", ref: useRef<HTMLInputElement>(null), score: 0 },
-    { name: "Player D", ref: useRef<HTMLInputElement>(null), score: 0 },
+    {
+      name: "Player A",
+      ref: useRef<HTMLInputElement>(null),
+      score: 0,
+    },
+    {
+      name: "Player B",
+      ref: useRef<HTMLInputElement>(null),
+      score: 0,
+    },
+    {
+      name: "Player C",
+      ref: useRef<HTMLInputElement>(null),
+      score: 0,
+    },
+    {
+      name: "Player D",
+      ref: useRef<HTMLInputElement>(null),
+      score: 0,
+    },
   ]);
 
   return (

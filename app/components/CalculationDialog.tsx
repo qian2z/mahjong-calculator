@@ -75,6 +75,7 @@ const CalculationDialog = ({
                   <TableCell></TableCell>
                   <TableCell></TableCell>
                   <TableCell></TableCell>
+                  <TableCell></TableCell>
                 </TableRow>
                 <TableRow>
                   <TableRowHeaderCell></TableRowHeaderCell>

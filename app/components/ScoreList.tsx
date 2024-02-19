@@ -45,11 +45,11 @@ const ScoreList = ({
       <Flex align="baseline" justify="center" gap="3">
         <Heading>R{round}</Heading>
         {add ? (
-          <Button onClick={handleSave}>
+          <Button onClick={handleSave} variant="classic">
             <IoMdSave /> Save
           </Button>
         ) : (
-          <Button onClick={() => setAdd(!add)}>
+          <Button onClick={() => setAdd(!add)} variant="classic">
             <FaPlus /> Add
           </Button>
         )}

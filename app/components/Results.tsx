@@ -58,7 +58,7 @@ const Results = ({
 
   return (
     <Flex align="center" justify="center" direction="column" gap="3">
-      <Button size="4" onClick={showResults}>
+      <Button size="3" onClick={showResults} variant="classic">
         <FaCalculator /> Results
       </Button>
       {results.length === 0 ? null : (

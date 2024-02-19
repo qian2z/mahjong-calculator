@@ -45,13 +45,13 @@ const Settings = ({
 
   return (
     <Flex align="center" justify="center" gap="2">
-      <Button onClick={() => location.reload()} color="red">
+      <Button onClick={() => location.reload()} color="red" variant="classic">
         <GrPowerReset />
         Reset
       </Button>
       <DialogRoot>
         <DialogTrigger>
-          <Button color="yellow">
+          <Button color="yellow" variant="classic">
             <IoIosSettings />
             Setting
           </Button>

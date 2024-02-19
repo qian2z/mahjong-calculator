@@ -29,7 +29,7 @@ const CalculationDialog = ({
     <Flex>
       <DialogRoot>
         <DialogTrigger>
-          <Button>
+          <Button color="yellow" variant="classic">
             <BiDetail />
             Detail
           </Button>
@@ -86,16 +86,17 @@ const CalculationDialog = ({
                     </TableCell>
                   ))}
                 </TableRow>
-                {[0, 1, 2].map((i) => (
-                  <TableRow key={i} align="center">
-                    <TableRowHeaderCell></TableRowHeaderCell>
-                    {players.map((p) => (
-                      <TableCell key={`${p.name}${i}`} justify="center">
-                        {p.score_detail[i]}
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                ))}
+                {players[0].score_detail.length !== 0 &&
+                  [0, 1, 2].map((i) => (
+                    <TableRow key={i} align="center">
+                      <TableRowHeaderCell></TableRowHeaderCell>
+                      {players.map((p) => (
+                        <TableCell key={`${p.name}${i}`} justify="center">
+                          {p.score_detail[i]}
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                  ))}
                 <TableRow>
                   <TableRowHeaderCell></TableRowHeaderCell>
                   {extraScore.map((s) => (

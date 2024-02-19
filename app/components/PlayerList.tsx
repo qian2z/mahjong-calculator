@@ -35,11 +35,11 @@ const PlayerList = ({
     <Flex direction="column" gap="4" className="w-2/5">
       <Flex align="baseline" justify="center">
         {edit ? (
-          <Button onClick={handleSave}>
+          <Button onClick={handleSave} variant="classic">
             <IoMdSave /> Save
           </Button>
         ) : (
-          <Button onClick={() => setEdit(!edit)}>
+          <Button onClick={() => setEdit(!edit)} variant="classic">
             <FaPen /> Edit
           </Button>
         )}

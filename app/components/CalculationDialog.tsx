@@ -51,7 +51,7 @@ const CalculationDialog = ({
                 {players[0].round_score.map((s, i) => (
                   <TableRow key={i} align="center">
                     <TableRowHeaderCell justify="center">
-                      <Text weight="bold">{`R${i}`}</Text>
+                      <Text weight="bold">{`R${i+1}`}</Text>
                     </TableRowHeaderCell>
                     {players.map((p) => (
                       <TableCell key={`${p.name}${i}`} justify="center">

@@ -1,20 +1,10 @@
-import {
-  Badge,
-  Button,
-  Flex,
-  TableBody,
-  TableCell,
-  TableColumnHeaderCell,
-  TableHeader,
-  TableRoot,
-  TableRow,
-  TableRowHeaderCell,
-  Text,
-} from "@radix-ui/themes";
+import { calculateDifferencesAndSum } from "@/utils/calculateDifferenceAndSum";
+import { calculateSettlement } from "@/utils/calculateSettlement";
+import { Button, Flex } from "@radix-ui/themes";
 import { useState } from "react";
 import { FaCalculator } from "react-icons/fa";
-import { FaArrowRight } from "react-icons/fa6";
 import { Player, Score } from "../page";
+import ResultsTable from "./ResultsTable";
 
 export interface FinalPlayer {
   name: string;
@@ -23,7 +13,7 @@ export interface FinalPlayer {
   settlement: number;
 }
 
-interface Settlement {
+export interface Settlement {
   payer: FinalPlayer;
   payee: FinalPlayer;
   amount: number;
@@ -41,26 +31,8 @@ const Results = ({
   const [results, setResults] = useState<FinalPlayer[]>([]);
   const [settlement, setSettlement] = useState<Settlement[]>([]);
 
-  const calculateDifferencesAndSum = () => {
-    const rr: number[] = [];
-    for (let i = 0; i < players.length; i++) {
-      const playerScore = players[i].score;
-      const differencesAndSum = players.map((player, index) => {
-        if (index === i) return 0;
-        const difference = player.score - playerScore;
-        return difference;
-      });
-      rr.push(
-        differencesAndSum.reduce((accumulator, currentValue) => {
-          return accumulator + currentValue;
-        }, 0)
-      );
-    }
-    return rr;
-  };
-
   const showResults = () => {
-    const score_results = calculateDifferencesAndSum();
+    const score_results = calculateDifferencesAndSum(players);
     let final_players = score_results.map((s, index) => ({
       name: players[index].name,
       final_score: s,
@@ -79,90 +51,12 @@ const Results = ({
     setSettlement(calculateSettlement(final_players));
   };
 
-  const calculateSettlement = (players: FinalPlayer[]) => {
-    const sortedPlayers = players.sort((a, b) => a.money - b.money);
-    const settlements: Settlement[] = [];
-    let payerIndex = 0;
-    let payeeIndex = sortedPlayers.length - 1;
-    while (payerIndex < payeeIndex) {
-      const payer = sortedPlayers[payerIndex];
-      const payee = sortedPlayers[payeeIndex];
-
-      const settlementAmount = Math.min(
-        payee.money - payee.settlement,
-        -payer.money + payer.settlement
-      );
-
-      settlements.push({
-        payer,
-        payee,
-        amount: parseFloat(settlementAmount.toFixed(2)),
-      });
-
-      payer.settlement -= settlementAmount;
-      payee.settlement += settlementAmount;
-
-      if (payer.settlement == payer.money) payerIndex++;
-      if (payee.settlement == payee.money) payeeIndex--;
-    }
-    return settlements;
-  };
-
   return (
     <Flex align="center" justify="center" direction="column" gap="3">
       <Button size="4" onClick={showResults}>
         <FaCalculator /> Results
       </Button>
-      <TableRoot size="3" variant="surface">
-        <TableHeader>
-          <TableRow align="center">
-            <TableColumnHeaderCell justify="center">
-              Player
-            </TableColumnHeaderCell>
-            <TableColumnHeaderCell justify="center">
-              Points
-            </TableColumnHeaderCell>
-            <TableColumnHeaderCell justify="center">
-              Settlement
-            </TableColumnHeaderCell>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {results?.map((r) => (
-            <TableRow key={r.name} align="center">
-              <TableRowHeaderCell justify="center">{r.name}</TableRowHeaderCell>
-              <TableCell justify="center">{r.final_score}</TableCell>
-              <TableCell>
-                <Flex direction="column" gap="2">
-                  {settlement
-                    ?.filter((s) => s.payer.name === r.name)
-                    .map((s) => (
-                      <Flex gap="2" align="center" justify="start">
-                        <FaArrowRight />
-                        <Text size="2" weight="bold">
-                          {s.payee.name}
-                        </Text>
-                        <Text size="3" weight="bold" color="blue">
-                          {s.amount}
-                        </Text>
-                      </Flex>
-                    ))}
-                  <Flex gap="2">
-                    <Badge>Total</Badge>
-                    <Text
-                      size="3"
-                      weight="bold"
-                      color={r.money < 0 ? "red" : "green"}
-                    >
-                      {r.money}
-                    </Text>
-                  </Flex>
-                </Flex>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </TableRoot>
+      <ResultsTable results={results} settlement={settlement} />
     </Flex>
   );
 };

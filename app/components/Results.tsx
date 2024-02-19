@@ -1,7 +1,6 @@
 import {
   Badge,
   Button,
-  Card,
   Flex,
   TableBody,
   TableCell,
@@ -138,17 +137,15 @@ const Results = ({
                   {settlement
                     ?.filter((s) => s.payer.name === r.name)
                     .map((s) => (
-                      <Card variant="classic">
-                        <Flex gap="2" align="center" justify="start">
-                          <FaArrowRight />
-                          <Text size="2" weight="bold">
-                            {s.payee.name}
-                          </Text>
-                          <Text size="4" weight="bold" color="blue">
-                            {s.amount}
-                          </Text>
-                        </Flex>
-                      </Card>
+                      <Flex gap="2" align="center" justify="start">
+                        <FaArrowRight />
+                        <Text size="2" weight="bold">
+                          {s.payee.name}
+                        </Text>
+                        <Text size="3" weight="bold" color="blue">
+                          {s.amount}
+                        </Text>
+                      </Flex>
                     ))}
                   <Flex gap="2">
                     <Badge>Total</Badge>

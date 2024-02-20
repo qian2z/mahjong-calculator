@@ -24,6 +24,7 @@ const ScoreList = ({
   setRound: Dispatch<SetStateAction<number>>;
 }) => {
   const [add, setAdd] = useState(false);
+  const [canAdd, setCanAdd] = useState(false);
 
   const handleSave = () => {
     const updatedPlayers = players.map((player) => ({
@@ -37,6 +38,9 @@ const ScoreList = ({
     }));
     setPlayers(updatedPlayers);
     setAdd(false);
+    if (round === 1) {
+      setCanAdd(true);
+    }
   };
 
   return (
@@ -51,7 +55,9 @@ const ScoreList = ({
           <Button
             onClick={() => {
               setAdd(!add);
-              setRound(round + 1);
+              if (canAdd) {
+                setRound(round + 1);
+              }
             }}
             variant="classic"
           >

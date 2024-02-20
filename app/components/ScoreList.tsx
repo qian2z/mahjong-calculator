@@ -36,7 +36,6 @@ const ScoreList = ({
       ],
     }));
     setPlayers(updatedPlayers);
-    setRound(round + 1);
     setAdd(false);
   };
 
@@ -49,7 +48,13 @@ const ScoreList = ({
             <IoMdSave /> Save
           </Button>
         ) : (
-          <Button onClick={() => setAdd(!add)} variant="classic">
+          <Button
+            onClick={() => {
+              setAdd(!add);
+              setRound(round + 1);
+            }}
+            variant="classic"
+          >
             <FaPlus /> Add
           </Button>
         )}

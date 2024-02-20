@@ -1,8 +1,15 @@
 import { calculateDifferencesAndSum } from "@/utils/calculateDifferenceAndSum";
 import { calculateSettlement } from "@/utils/calculateSettlement";
-import { Button, Flex } from "@radix-ui/themes";
+import {
+  Button,
+  CalloutIcon,
+  CalloutRoot,
+  CalloutText,
+  Flex,
+  Strong,
+} from "@radix-ui/themes";
 import { useState } from "react";
-import { FaCalculator } from "react-icons/fa";
+import { FaCalculator, FaInfoCircle } from "react-icons/fa";
 import { Player, Score } from "../page";
 import CalculationDialog from "./CalculationDialog";
 import ResultsTable from "./ResultsTable";
@@ -58,6 +65,14 @@ const Results = ({
 
   return (
     <Flex align="center" justify="center" direction="column" gap="3">
+      <CalloutRoot variant="surface" color="red">
+        <CalloutIcon>
+          <FaInfoCircle />
+        </CalloutIcon>
+        <CalloutText>
+          Save all the edits before clicking <Strong>Results</Strong>
+        </CalloutText>
+      </CalloutRoot>
       <Button size="3" onClick={showResults} variant="classic">
         <FaCalculator /> Results
       </Button>

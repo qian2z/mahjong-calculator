@@ -20,7 +20,7 @@ export interface Score {
 }
 
 export default function Home() {
-  const [round, setRound] = useState(1);
+  const [round, setRound] = useState(0);
   const [extraScore, setExtraScore] = useState([
     { title: "1st", score: 60, ref: useRef<HTMLInputElement>(null) },
     { title: "2nd", score: 30, ref: useRef<HTMLInputElement>(null) },

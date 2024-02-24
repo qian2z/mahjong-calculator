@@ -30,10 +30,10 @@ const ScoreList = ({
     const updatedPlayers = players.map((player) => ({
       name: player.name,
       ref: player.ref,
-      score: player.score + parseInt(player.ref.current?.value!),
+      score: player.score + (parseInt(player.ref.current?.value!) || 0),
       round_score: [
         ...player.round_score,
-        parseInt(player.ref.current?.value!),
+        parseInt(player.ref.current?.value!) || 0,
       ],
     }));
     setPlayers(updatedPlayers);
@@ -71,11 +71,11 @@ const ScoreList = ({
           players.map((p) => (
             <TextFieldRoot key={p.name}>
               <TextFieldInput
-                defaultValue={0}
                 ref={p.ref}
                 required
                 size="3"
                 type="number"
+                min={0}
               />
             </TextFieldRoot>
           ))}

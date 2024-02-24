@@ -49,7 +49,7 @@ const PlayerList = ({
           players.map((p) => (
             <TextFieldRoot key={p.name}>
               <TextFieldInput
-                defaultValue={p.name}
+                placeholder={p.name}
                 ref={p.ref}
                 required
                 size="3"
